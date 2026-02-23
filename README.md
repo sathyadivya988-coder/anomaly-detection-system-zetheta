@@ -1,11 +1,11 @@
-##💳 AI-Powered Credit Card Fraud Detection Dashboard
-##🚀 Project Overview
+💳 AI-Powered Credit Card Fraud Detection Dashboard
+🚀 Project Overview
 
 This project is an end-to-end AI-powered fraud detection system built to identify fraudulent credit card transactions in real time.
 
 It combines machine learning, interactive dashboards, and data visualization to simulate a production-level fraud monitoring system.
 
-##🎯 Key Features
+🎯 Key Features
 
 🔐 Secure Login System
 
@@ -29,7 +29,7 @@ Algorithm: Random Forest Classifier
 
 Dataset: Credit Card Fraud Detection Dataset
 
-##Evaluation Metrics:
+Evaluation Metrics:
 
 Accuracy
 
@@ -59,7 +59,7 @@ Joblib
 
 Git & GitHub
 
-##📁 Project Structure
+📁 Project Structure
 anomaly-detection-system/
 │
 ├── app.py                  # Streamlit dashboard application
