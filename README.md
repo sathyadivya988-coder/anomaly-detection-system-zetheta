@@ -1,4 +1,5 @@
 💳 AI-Powered Financial Anomaly & Fraud Detection Dashboard
+
 🚀 Project Overview
 
 This project is an end-to-end machine learning system designed to detect fraudulent credit card transactions in real time.
@@ -122,7 +123,7 @@ anomaly-detection-system/
 └── README.md
 
 ▶️ How to Run Locally
-git clone https://github.com/your-username/ai-fraud-detection-dashboard.git
+git clone https://github.com/sathyadivya988-coder/ai-fraud-detection-dashboard.git
 cd ai-fraud-detection-dashboard
 
 pip install -r requirements.txt
