@@ -125,9 +125,12 @@ anomaly-detection-system/
 ▶️ How to Run Locally
 
 git clone https://github.com/sathyadivya988-coder/ai-fraud-detection-dashboard.git
+
 cd ai-fraud-detection-dashboard
 
+
 pip install -r requirements.txt
+
 streamlit run app.py
 
 🚀 Future Improvements
