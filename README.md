@@ -4,13 +4,13 @@
 
 This project is an end-to-end machine learning system designed to detect fraudulent credit card transactions in real time.
 
-It applies anomaly detection principles to identify rare and suspicious financial activities within a highly imbalanced dataset. The system integrates model training, evaluation, and an interactive dashboard to simulate a production-level fraud monitoring platform.
+It applies anomaly detection principles to identify rare and suspicious financial activities in a highly imbalanced dataset. The system integrates model training, evaluation, and an interactive dashboard to simulate a production-level fraud monitoring platform.
 
 ## 🧠 Problem Statement
 
 Financial fraud is a critical challenge in digital payment systems. Fraudulent transactions represent a very small percentage of total transactions, making detection difficult due to severe class imbalance.
 
-The objective of this project is to:
+Objectives:
 
 Detect fraudulent transactions accurately
 
@@ -30,7 +30,7 @@ Visualize fraud patterns interactively
 
 📂 Bulk CSV Fraud Detection
 
-📊 Model Performance Metrics (Accuracy, Precision, Recall, F1)
+📊 Model Performance Metrics (Accuracy, Precision, Recall, F1 Score)
 
 📈 Confusion Matrix Visualization
 
@@ -58,15 +58,16 @@ Fraud detection datasets are highly imbalanced because fraudulent transactions a
 
 To address this:
 
-Focus is placed on Precision, Recall, and F1 Score rather than Accuracy alone
+Focus on Precision, Recall, and F1 Score rather than Accuracy alone
 
-ROC Curve and Precision-Recall Curve are used for deeper evaluation
+Use ROC Curve and Precision-Recall Curve for deeper evaluation
 
-Adjustable probability threshold allows tuning between false positives and false negatives
+Implement adjustable probability threshold to tune between false positives and false negatives
 
 ## 🤖 Machine Learning Model
 
 Algorithm: Random Forest Classifier
+
 Dataset: Credit Card Fraud Detection Dataset
 
 ## 📊 Evaluation Metrics
@@ -83,9 +84,7 @@ ROC Curve
 
 Precision-Recall Curve
 
-## 📊 Model Performance Dashboard
-
-The application includes:
+## 📊 Model Performance Dashboard Includes
 
 Confusion Matrix Visualization
 
@@ -114,24 +113,26 @@ Git & GitHub
 ## 📁 Project Structure
 anomaly-detection-system/
 │
-├── app.py                  # Streamlit dashboard application
+├── app.py                     # Streamlit dashboard application
 ├── src/
-│   └── model_training.py   # Model training pipeline
-├── models/                 # Saved ML models (excluded from Git)
-├── data/                   # Dataset directory (excluded from Git)
+│   └── model_training.py      # Model training pipeline
+├── models/                    # Saved ML models
+├── data/                      # Dataset directory
 ├── .gitignore
 └── README.md
 
 ## ▶️ How to Run Locally
+git clone https://github.com/sathyadivya988-coder/anomaly-detection-system-zetheta.git
 
-git clone https://github.com/sathyadivya988-coder/ai-fraud-detection-dashboard.git
-
-cd ai-fraud-detection-dashboard
-
+cd anomaly-detection-system-zetheta
 
 pip install -r requirements.txt
 
 streamlit run app.py
+
+## 🚀 Live Demo
+
+🔗 https://anomaly-detection-system-zetheta.streamlit.app
 
 ## 🚀 Future Improvements
 
@@ -143,18 +144,12 @@ Real-time streaming data integration
 
 Database logging for transaction history
 
-Cloud deployment (AWS / Streamlit Cloud)
+Cloud deployment (AWS)
 
 ## 👨‍💻 Author
 
-Built as a practical machine learning project to simulate real-world financial fraud detection systems and demonstrate end-to-end ML application development.
+P.Dhivyasri
 
-## 🚀 Live Demo
-https://anomaly-detection-system-zetheta.streamlit.app
+B.Tech Information Technology
 
-## 🔍 Features
-- Secure Login
-- Fraud Probability Prediction
-- Adjustable Threshold Slider
-- Risk Level Indicator
-- Interactive Graphs
+End-to-End Machine Learning & Deployment Project
