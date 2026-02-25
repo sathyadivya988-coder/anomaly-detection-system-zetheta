@@ -1,12 +1,12 @@
-💳 AI-Powered Financial Anomaly & Fraud Detection Dashboard
+## 💳 AI-Powered Financial Anomaly & Fraud Detection Dashboard
 
-🚀 Project Overview
+## 🚀 Project Overview
 
 This project is an end-to-end machine learning system designed to detect fraudulent credit card transactions in real time.
 
 It applies anomaly detection principles to identify rare and suspicious financial activities within a highly imbalanced dataset. The system integrates model training, evaluation, and an interactive dashboard to simulate a production-level fraud monitoring platform.
 
-🧠 Problem Statement
+## 🧠 Problem Statement
 
 Financial fraud is a critical challenge in digital payment systems. Fraudulent transactions represent a very small percentage of total transactions, making detection difficult due to severe class imbalance.
 
@@ -20,7 +20,7 @@ Provide real-time prediction capability
 
 Visualize fraud patterns interactively
 
-✨ Key Features
+## ✨ Key Features
 
 🔐 Secure Login System
 
@@ -38,7 +38,7 @@ Visualize fraud patterns interactively
 
 🎨 Custom Neon-Themed Interactive UI
 
-🏗 System Architecture
+## 🏗 System Architecture
 
 Data Preprocessing
 
@@ -52,7 +52,7 @@ Streamlit Dashboard Integration
 
 Real-Time Prediction & Visualization
 
-⚖️ Handling Imbalanced Data
+## ⚖️ Handling Imbalanced Data
 
 Fraud detection datasets are highly imbalanced because fraudulent transactions are rare.
 
@@ -64,12 +64,12 @@ ROC Curve and Precision-Recall Curve are used for deeper evaluation
 
 Adjustable probability threshold allows tuning between false positives and false negatives
 
-🤖 Machine Learning Model
+## 🤖 Machine Learning Model
 
 Algorithm: Random Forest Classifier
 Dataset: Credit Card Fraud Detection Dataset
 
-📊 Evaluation Metrics
+## 📊 Evaluation Metrics
 
 Accuracy
 
@@ -83,7 +83,7 @@ ROC Curve
 
 Precision-Recall Curve
 
-📊 Model Performance Dashboard
+## 📊 Model Performance Dashboard
 
 The application includes:
 
@@ -95,7 +95,7 @@ Real-Time Probability Monitoring
 
 Risk Level Classification (Low / Medium / High)
 
-🛠 Tech Stack
+## 🛠 Tech Stack
 
 Python
 
@@ -111,7 +111,7 @@ Joblib
 
 Git & GitHub
 
-📁 Project Structure
+## 📁 Project Structure
 anomaly-detection-system/
 │
 ├── app.py                  # Streamlit dashboard application
@@ -122,7 +122,7 @@ anomaly-detection-system/
 ├── .gitignore
 └── README.md
 
-▶️ How to Run Locally
+## ▶️ How to Run Locally
 
 git clone https://github.com/sathyadivya988-coder/ai-fraud-detection-dashboard.git
 
@@ -133,7 +133,7 @@ pip install -r requirements.txt
 
 streamlit run app.py
 
-🚀 Future Improvements
+## 🚀 Future Improvements
 
 Model comparison (Logistic Regression, XGBoost)
 
@@ -145,6 +145,16 @@ Database logging for transaction history
 
 Cloud deployment (AWS / Streamlit Cloud)
 
-👨‍💻 Author
+## 👨‍💻 Author
 
 Built as a practical machine learning project to simulate real-world financial fraud detection systems and demonstrate end-to-end ML application development.
+
+## 🚀 Live Demo
+https://anomaly-detection-system-zetheta.streamlit.app
+
+## 🔍 Features
+- Secure Login
+- Fraud Probability Prediction
+- Adjustable Threshold Slider
+- Risk Level Indicator
+- Interactive Graphs
