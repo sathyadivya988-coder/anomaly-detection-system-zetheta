@@ -1,9 +1,11 @@
 streamlit
 pandas
-numpy
+numpy==1.26.4
 scikit-learn
 matplotlib
 seaborn
 joblib
 plotly
 shap
+reportlab
+

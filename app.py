@@ -10,6 +10,7 @@ import os
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import seaborn as sns
+import shap
 from sklearn.metrics import (
     confusion_matrix,
     accuracy_score,
@@ -20,6 +21,16 @@ from sklearn.metrics import (
     auc,
     precision_recall_curve
 )
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from reportlab.platypus import ListFlowable, ListItem
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+import datetime
+import io
 
 # --------------------------------------------------
 # PAGE CONFIG
@@ -93,6 +104,22 @@ label {
     color:#FF2E63;
     box-shadow:0 0 20px #FF2E63;
 }
+/* Download Button Styling */
+.stDownloadButton > button {
+    background: linear-gradient(90deg,#FF2E63,#FFD700);
+    color: black;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    padding: 10px 20px;
+    box-shadow: 0 0 15px #FFD700;
+    transition: 0.3s;
+}
+
+.stDownloadButton > button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px #FF2E63;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -117,7 +144,85 @@ def login():
             st.rerun()
         else:
             st.error("Invalid Credentials")
+    # --------------------------------------------------
+# 📄 PDF REPORT GENERATOR
+# --------------------------------------------------
 
+def generate_fraud_report(prediction, probability, risk_level, threshold, top_features):
+
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer)
+    elements = []
+
+    styles = getSampleStyleSheet()
+
+    elements.append(Paragraph("<b>AI Fraud Detection Report</b>", styles['Title']))
+    elements.append(Spacer(1, 0.4 * inch))
+
+    elements.append(Paragraph(f"Generated On: {datetime.datetime.now()}", styles['Normal']))
+    elements.append(Spacer(1, 0.3 * inch))
+
+    status = "FRAUD DETECTED" if prediction == 1 else "LEGITIMATE TRANSACTION"
+
+    elements.append(Paragraph(f"Transaction Status: {status}", styles['Normal']))
+    elements.append(Paragraph(f"Fraud Probability: {probability:.2f}%", styles['Normal']))
+    elements.append(Paragraph(f"Risk Level: {risk_level}", styles['Normal']))
+    elements.append(Paragraph(f"Detection Threshold: {threshold}", styles['Normal']))
+    elements.append(Spacer(1, 0.3 * inch))
+
+    elements.append(Paragraph("<b>Top Contributing Features:</b>", styles['Heading2']))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    feature_list = [ListItem(Paragraph(f, styles['Normal'])) for f in top_features]
+    elements.append(ListFlowable(feature_list))
+
+    doc.build(elements)
+    buffer.seek(0)
+
+    return buffer
+# --------------------------------------------------
+# 📄 BULK FRAUD REPORT GENERATOR
+# --------------------------------------------------
+
+def generate_bulk_report(df):
+
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer)
+    elements = []
+    styles = getSampleStyleSheet()
+
+    elements.append(Paragraph("<b>Bulk Fraud Detection Report</b>", styles['Title']))
+    elements.append(Spacer(1, 0.4 * inch))
+
+    elements.append(Paragraph(f"Generated On: {datetime.datetime.now()}", styles['Normal']))
+    elements.append(Spacer(1, 0.3 * inch))
+
+    total = len(df)
+    fraud_count = int(df["Prediction"].sum())
+    legit_count = total - fraud_count
+
+    elements.append(Paragraph(f"Total Transactions: {total}", styles['Normal']))
+    elements.append(Paragraph(f"Fraud Transactions: {fraud_count}", styles['Normal']))
+    elements.append(Paragraph(f"Legitimate Transactions: {legit_count}", styles['Normal']))
+    elements.append(Spacer(1, 0.3 * inch))
+
+    elements.append(Paragraph("<b>Top 10 Suspicious Transactions (Highest Probability)</b>", styles['Heading2']))
+    elements.append(Spacer(1, 0.2 * inch))
+
+    top_suspicious = df.sort_values("Fraud Probability", ascending=False).head(10)
+
+    for index, row in top_suspicious.iterrows():
+        elements.append(
+            Paragraph(
+                f"Transaction {index} → Probability: {row['Fraud Probability']:.2f}",
+                styles['Normal']
+            )
+        )
+        elements.append(Spacer(1, 0.1 * inch))
+
+    doc.build(elements)
+    buffer.seek(0)
+    return buffer
 # --------------------------------------------------
 # MAIN APPLICATION
 # --------------------------------------------------
@@ -133,7 +238,7 @@ def main_app():
         return
 
     model = joblib.load(model_path)
-
+    explainer = shap.TreeExplainer(model)
     menu = st.sidebar.radio("Navigation",
                             ["Single Prediction",
                              "Bulk CSV Detection",
@@ -227,7 +332,60 @@ def main_app():
             Threshold: {threshold}
             </div>
             """, unsafe_allow_html=True)
+            st.markdown("---")
+            st.markdown("## 📊 Model Explanation (Single Transaction)")
 
+# SHAP values
+            shap_values = explainer(df_input)
+            fraud_shap = shap_values[:, :, 1]
+
+            plt.figure(figsize=(9,5))
+            shap.plots.waterfall(fraud_shap[0], max_display=10, show=False)
+            st.pyplot(plt.gcf())
+            plt.close()
+            
+
+            values = fraud_shap.values[0]
+            feature_names = df_input.columns
+
+            top_indices = np.argsort(np.abs(values))[-5:][::-1]
+
+            st.markdown("### 🔎 Top 5 Important Features")
+
+            feature_explanations = []
+
+            for i in top_indices:
+                 if values[i] > 0:
+                     text = f"{feature_names[i]} increased fraud risk"
+                     st.write(f"🔴 **{text}**")
+                 else:
+                     text = f"{feature_names[i]} reduced fraud risk"
+                     st.write(f"🟢 **{text}**")
+
+                 feature_explanations.append(text)
+
+            if prob >= threshold:
+                st.error("🚨 This transaction was flagged as FRAUD because key features strongly pushed the prediction toward high risk.")
+            else:
+                st.success("✅ This transaction is NORMAL because major features reduced fraud probability.")
+            # --------------------------------------------------
+# 📥 DOWNLOAD FRAUD REPORT
+# --------------------------------------------------
+
+            report_buffer = generate_fraud_report(
+               prediction=1 if prob >= threshold else 0,
+               probability=percent,
+               risk_level=risk,
+               threshold=threshold,
+               top_features=feature_explanations
+            )
+
+            st.download_button(
+               label="⬇ Download Fraud Analysis Report (PDF)",
+               data=report_buffer,
+               file_name="fraud_report.pdf",
+               mime="application/pdf"
+            )
     # ==========================================================
     # 📂 BULK CSV DETECTION (FIXED)
     # ==========================================================
@@ -259,7 +417,45 @@ def main_app():
             st.dataframe(df.head())
 
             st.metric("🚨 Total Fraud Transactions", int(sum(preds)))
+ # -------- SHAP Summary For Bulk --------
+            st.markdown("---")
+            st.markdown("## 📊 Model Explanation (Bulk Data)")
 
+# Take small sample (important)
+            df_sample = df.sample(min(200, len(df)), random_state=42)
+
+# Compute SHAP
+            shap_values = explainer(df_sample)
+
+# Select Fraud class
+            fraud_shap = shap_values[:, :, 1]
+
+            plt.figure(figsize=(10,6))
+            shap.plots.beeswarm(fraud_shap, max_display=10, show=False)
+            st.pyplot(plt.gcf())
+            plt.close()
+            
+            mean_importance = np.abs(fraud_shap.values).mean(axis=0)
+            feature_names = df_sample.columns
+
+            top_indices = np.argsort(mean_importance)[-5:][::-1]
+
+            st.markdown("### 🔎 Top 5 Most Influential Features (Overall Dataset)")
+
+            for i in top_indices:
+                st.write(f"⭐ **{feature_names[i]}** strongly influenced fraud predictions")
+# --------------------------------------------------
+# 📥 DOWNLOAD BULK FRAUD REPORT
+# --------------------------------------------------
+
+            bulk_report_buffer = generate_bulk_report(df)
+
+            st.download_button(
+                label="⬇ Download Bulk Fraud Report (PDF)",
+                data=bulk_report_buffer,
+                file_name="bulk_fraud_report.pdf",
+                mime="application/pdf"
+            )    
     # ==========================================================
     # 📊 MODEL PERFORMANCE
     # ==========================================================
