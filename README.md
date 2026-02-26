@@ -1,127 +1,220 @@
 ## 💳 AI-Powered Financial Anomaly & Fraud Detection Dashboard
+<p align="center">
 
-## 🚀 Project Overview
 
-This project is an end-to-end machine learning system designed to detect fraudulent credit card transactions in real time.
 
-It applies anomaly detection principles to identify rare and suspicious financial activities in a highly imbalanced dataset. The system integrates model training, evaluation, and an interactive dashboard to simulate a production-level fraud monitoring platform.
+
+
+
+
+
+
+
+
+
+
+
+</p>
+🚀 Live Demo
+
+🔗 https://anomaly-detection-system-zetheta.streamlit.app
+
+## 📌 Project Overview
+
+A production-grade financial anomaly detection system built to identify fraudulent credit card transactions in real time.
+
+This system integrates:
+
+Machine Learning (Random Forest)
+
+Explainable AI (SHAP)
+
+Interactive Fraud Dashboard
+
+Adjustable Risk Threshold
+
+Automated PDF Reporting
+
+Designed to simulate a real-world fintech fraud monitoring platform.
 
 ## 🧠 Problem Statement
 
-Financial fraud is a critical challenge in digital payment systems. Fraudulent transactions represent a very small percentage of total transactions, making detection difficult due to severe class imbalance.
+Financial fraud detection is challenging due to:
 
-Objectives:
+Severe class imbalance (fraud < 1%)
 
-Detect fraudulent transactions accurately
+High cost of false negatives
 
-Minimize false positives
+Need for real-time detection
 
-Provide real-time prediction capability
+Requirement for model transparency
 
-Visualize fraud patterns interactively
+This system solves these challenges using threshold tuning, SHAP explainability, and risk-based classification.
 
+## 🏗 System Architecture
+                ┌────────────────────┐
+                │  Credit Card Data  │
+                └─────────┬──────────┘
+                          │
+                          ▼
+                ┌────────────────────┐
+                │ Data Preprocessing │
+                └─────────┬──────────┘
+                          │
+                          ▼
+                ┌────────────────────┐
+                │ Random Forest Model│
+                └─────────┬──────────┘
+                          │
+        ┌─────────────────┼─────────────────┐
+        ▼                 ▼                 ▼
+ Real-Time Prediction   SHAP Engine     Model Metrics
+        │                 │                 │
+        ▼                 ▼                 ▼
+ Risk Classification  Feature Impact   ROC / PR Curves
+        │
+        ▼
+ Streamlit Dashboard
+        │
+        ▼
+ PDF Report Generation
 ## ✨ Key Features
 
-🔐 Secure Login System
+🔐 Authentication
 
-🔍 Real-Time Single Transaction Fraud Prediction
+Secure login interface for controlled access.
 
-🎚 Adjustable Fraud Detection Threshold
+🔍 Real-Time Fraud Prediction
+
+Instant single transaction prediction
+
+Adjustable probability threshold
+
+Risk classification (Low / Medium / High)
 
 📂 Bulk CSV Fraud Detection
 
-📊 Model Performance Metrics (Accuracy, Precision, Recall, F1 Score)
+Upload dataset
 
-📈 Confusion Matrix Visualization
+Detect fraud at scale
 
-🔥 Fraud Pattern Heatmap Dashboard
+View suspicious transactions
 
-🎨 Custom Neon-Themed Interactive UI
+Download full PDF report
 
-## 🏗 System Architecture
+🧠 Explainable AI (SHAP)
 
-Data Preprocessing
+Waterfall plot (Single transaction)
 
-Model Training (Random Forest Classifier)
+Beeswarm summary plot (Bulk data)
 
-Model Evaluation
+Top 5 contributing features
 
-Model Serialization using Joblib
+Human-readable fraud reasoning
 
-Streamlit Dashboard Integration
+📊 Advanced Analytics Dashboard
 
-Real-Time Prediction & Visualization
+Confusion Matrix
 
-## ⚖️ Handling Imbalanced Data
-
-Fraud detection datasets are highly imbalanced because fraudulent transactions are rare.
-
-To address this:
-
-Focus on Precision, Recall, and F1 Score rather than Accuracy alone
-
-Use ROC Curve and Precision-Recall Curve for deeper evaluation
-
-Implement adjustable probability threshold to tune between false positives and false negatives
-
-## 🤖 Machine Learning Model
-
-Algorithm: Random Forest Classifier
-
-Dataset: Credit Card Fraud Detection Dataset
-
-## 📊 Evaluation Metrics
-
-Accuracy
-
-Precision
-
-Recall
-
-F1 Score
+Fraud Density Heatmap
 
 ROC Curve
 
 Precision-Recall Curve
 
-## 📊 Model Performance Dashboard Includes
+Live probability monitoring
 
-Confusion Matrix Visualization
+📑 Automated Reporting
 
-Fraud Density Heatmap (Time vs Transaction Amount)
+Single transaction PDF report
 
-Real-Time Probability Monitoring
+Bulk fraud summary report
 
-Risk Level Classification (Low / Medium / High)
+Top 10 suspicious transactions
+
+⚖️ Handling Imbalanced Data
+
+Fraud datasets are highly imbalanced.
+
+This system handles imbalance by:
+
+Prioritizing Recall & F1 Score over Accuracy
+
+Using ROC & Precision-Recall curves
+
+Allowing dynamic threshold tuning
+
+Visualizing fraud concentration patterns
+
+Providing SHAP transparency for regulatory trust
+
+## 🤖 Machine Learning Model
+
+Algorithm: Random Forest Classifier
+
+Why Random Forest?
+
+Handles high dimensional data
+
+Robust to noise
+
+Performs well on imbalanced data
+
+Provides feature importance
+
+## 📊 Evaluation Metrics
+
+Metric	Purpose
+
+Accuracy	Overall correctness
+
+Precision	Fraud prediction reliability
+
+Recall	Ability to detect fraud
+
+F1 Score	Balance between Precision & Recall
+
+ROC Curve	Performance across thresholds
+
+PR Curve	Imbalanced data evaluation
 
 ## 🛠 Tech Stack
 
-Python
+Category	Technology
 
-Streamlit
+Programming	Python
 
-Scikit-learn
+ML Framework	Scikit-Learn
 
-Pandas & NumPy
+Explainability	SHAP
 
-Matplotlib & Seaborn
+Dashboard	Streamlit
 
-Joblib
+Data Processing	Pandas, NumPy
 
-Git & GitHub
+Visualization	Matplotlib, Seaborn
+
+Report Generation	ReportLab
+
+Model Serialization	Joblib
+
+Version Control	Git & GitHub
 
 ## 📁 Project Structure
+
 anomaly-detection-system/
 │
-├── app.py                     # Streamlit dashboard application
+├── app.py
 ├── src/
-│   └── model_training.py      # Model training pipeline
-├── models/                    # Saved ML models
-├── data/                      # Dataset directory
-├── .gitignore
-└── README.md
+│   └── model_training.py
+├── models/
+├── data/
+├── requirements.txt
+├── README.md
+└── .gitignore
 
-## ▶️ How to Run Locally
+## ▶️ Run Locally
+
 git clone https://github.com/sathyadivya988-coder/anomaly-detection-system-zetheta.git
 
 cd anomaly-detection-system-zetheta
@@ -130,26 +223,43 @@ pip install -r requirements.txt
 
 streamlit run app.py
 
-## 🚀 Live Demo
+## 📈 Why This Project Stands Out
 
-🔗 https://anomaly-detection-system-zetheta.streamlit.app
+
+✅ End-to-End ML Pipeline
+
+✅ Real-Time Deployment
+
+✅ Explainable AI Integration
+
+✅ Interactive Dashboard
+
+✅ Production-Style Reporting
+
+✅ Clean UI/UX Design
+
+✅ Portfolio-Ready Architecture
+
+This is not just a model —
+This is a deployable fraud detection system.
 
 ## 🚀 Future Improvements
 
-Model comparison (Logistic Regression, XGBoost)
+XGBoost model comparison
 
-Explainable AI using SHAP
+Auto anomaly detection (Isolation Forest)
 
-Real-time streaming data integration
+Real-time streaming fraud detection
 
-Database logging for transaction history
+Database integration
 
 Cloud deployment (AWS)
 
+CI/CD integration
+
 ## 👨‍💻 Author
 
-P.Dhivyasri
+P. Dhivyasri
+B.Tech – Information Technology
 
-B.Tech Information Technology
-
-End-to-End Machine Learning & Deployment Project
+Machine Learning | Explainable AI | Deployment | Data Science
